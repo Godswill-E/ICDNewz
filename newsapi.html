@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="newsapi.css">
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="header"> 
+        <div class="logo" onclick="closesearch()">
+            <span class="menu"><i class="fa-solid fa-bars"></i></span>
+            <img src="images/ICDNewz.png" width="100px" alt="" srcset="">
+
+        </div>
+        
+        <div class="nav" >
+            <a href=""> Sport news |</a>
+            <a href=""> Movie news |</a>
+            <a href=""> Politics |</a>
+            <a href=""> Contact us </a>
+            <span><input type="text" placeholder="Search news..." class="search-input" onclick="opensearch(this)"> <i class="fa-solid fa-magnifying-glass"></i></span>
+        </div>
+
+
+        
+    
+    </div>
+            <div class="sidebar">
+            <li class="closesidebar"> <i class="fa-solid fa-xmark"></i></li>
+            <li> <i class="fa-solid fa-calculator"></i> <span>Measurement Calculator</span></li>
+            <li> <i class="fa-solid fa-arrow-right-to-bracket"></i><span>Login System</span></li>
+            <li> <i class="fa-solid fa-note-sticky"></i><span>Note taking</span>  </li>
+            <li> <i class="fa-solid fa-calculator"></i> <span>Currency converter</span></li>
+            </div>
+    <div class="container" onclick="closesearch()" >
+
+<!-- 
+        <div class="news-box">
+            <div class="image-div">
+                <img class="image" src="images/alex-suprun-ZHvM3XIOHoE-unsplash.jpg" alt="image"></img>
+            </div>
+
+            <h1>About USA</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, veniam!</p>
+
+        </div> -->
+
+
+         
+
+        
+    </div>
+    <div class="the-author">
+
+        <div class="section2">
+            <img src="images/icd_auto.png" alt="the author">
+        </div>
+
+        <div class="section1">
+            <div>
+            <h2> <i> About Me </i></h2>
+            <h1> <i>Web Developer</i></h1>
+            <p> <i> I am a passionate web development with over 5 years of
+experience, helping brands visually communicate their
+identity. My skill philosophy revolves around simplicity,
+clarity, and creativity. From developing informative and solution solving algorithim  to
+crafting visually stunning social media campaigns, I aim to
+create website that not only stand out but also connect
+people to their needs.</i>
+               </p>
+                </div>
+        </div>
+
+
+    </div>
+
+    <div class="footer"> Copywrite: I create Digitals © 2025</div>
+
+    <script>
+
+
+    let sidebar = document.querySelector(".sidebar")
+    let container = document.querySelector(".container")
+    let searchopen = document.querySelector(".search-input")
+    let menu = document.querySelector(".menu")
+    let close = document.querySelector(".closesidebar")
+
+
+        let url = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=727e7d8a76d041d5875065999470803a";
+
+        let url2 = 'https://api.apitube.io/v1/news/everything?per_page=10';
+
+     
+        function news(){
+            fetch(url)
+            .then((response)=> response.json())
+            .then(data =>{
+                console.log(data.articles)
+                data.articles.forEach((info, index) => {
+
+                    if (info.description === null){
+                        data.articles.splice(index,1)
+                        console.log("--------------------");
+                        console.log(info)
+                        // console.log(index)
+                    }else{
+                     let news = `
+                            <div class="news-box" onclick="visitpage('${info.url}')">
+                                <div class="image-div">
+                                    <img class="image" src="${info.urlToImage}" alt="image"></img>
+                                </div>
+
+                                <h1>${info.title}</h1>
+                                <p>${info.description}</p>
+
+                            </div>
+                            `
+
+                   container.innerHTML += news;
+                    }
+
+                })})
+                
+                
+            .catch((err)=>{
+                container.innerHTML = err + " news try refreshing the page"
+            })
+        }
+
+        function visitpage(link){
+            window.location = link;
+        }
+
+        function opensearch(elem){
+            elem.classList.toggle("show")
+        }
+
+        function closesearch(){
+            searchopen.classList.remove("show");
+        }
+        
+        function showmenu(){
+            sidebar.classList.add("sidebarshow") ;
+        }
+
+        function hidesidebar(){
+            sidebar.classList.remove("sidebarshow") ;
+        }
+
+       
+        function second(){
+            fetch("https://api.apitube.io/v1/news/everything?per_page=10", {
+            method: "GET",
+            headers: {
+                "X-API-Key": "api_live_DzCx6Xze2UWFKhFa08LxkhV1iyQtKUZBDsLVps4DDPk6W2i8mKpI5r4eC69z"
+            }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // news articles here
+            })
+            .catch(error => console.error("Error:", error));
+
+                    }
+
+        second()
+                
+       
+        news()
+        container.addEventListener('click', hidesidebar)
+        menu.addEventListener('click', showmenu)
+        window.addEventListener('scroll', hidesidebar)
+        close.addEventListener('click', hidesidebar)
+
+</script>
+</body>
+</html>
