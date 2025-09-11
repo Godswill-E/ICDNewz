@@ -83,6 +83,7 @@ people to their needs.</i>
     <script async>
 
 
+
     let sidebar = document.querySelector(".sidebar")
     let container = document.querySelector(".container")
     let searchopen = document.querySelector(".search-input")
@@ -90,93 +91,123 @@ people to their needs.</i>
     let close = document.querySelector(".closesidebar")
 
 
-        let url = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=727e7d8a76d041d5875065999470803a";
-
-        let url2 = 'https://api.apitube.io/v1/news/everything?per_page=10';
+    let url = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=727e7d8a76d041d5875065999470803a";
 
      
-        function news(){
-            fetch(url)
-            .then((response)=> response.json())
-            .then(data =>{
-                console.log(data.articles)
-                data.articles.forEach((info, index) => {
+    // function news(){
+    //         fetch(url)
+    //         .then((response)=> response.json())
+    //         .then(data =>{
+    //             console.log(data.articles)
+    //             data.articles.forEach((info, index) => {
 
-                    if (info.description === null){
-                        data.articles.splice(index,1)
-                        console.log("--------------------");
-                        console.log(info)
-                        // console.log(index)
-                    }else{
+    //                 if (info.description === null){
+    //                     data.articles.splice(index,1)
+    //                     console.log("--------------------");
+    //                     console.log(info)
+    //                     // console.log(index)
+    //                 }else{
+    //                  let news = `
+    //                         <div class="news-box" onclick="visitpage('${info.url}')">
+    //                             <div class="image-div">
+    //                                 <img class="image" src="${info.urlToImage}" alt="image"></img>
+    //                             </div>
+
+    //                             <h1>${info.title}</h1>
+    //                             <p>${info.description}</p>
+
+    //                         </div>
+    //                         `
+
+    //                container.innerHTML += news;
+    //                 }
+
+    //             })})
+                
+                
+    //         .catch((err)=>{
+    //             container.innerHTML = err + " news try refreshing the page"
+    //         })
+    //     }
+
+    function visitpage(link){
+            window.location = link;
+        }
+
+    function opensearch(elem){
+            elem.classList.toggle("show")
+        }
+
+    function closesearch(){
+            searchopen.classList.remove("show");
+        }
+        
+    function showmenu(){
+            sidebar.classList.add("sidebarshow") ;
+        }
+
+    function hidesidebar(){
+            sidebar.classList.remove("sidebarshow") ;
+        }
+
+       
+    async function second() {
+            const url = 'https://real-time-news-data.p.rapidapi.com/full-story-coverage?story=CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2pzbFA3X0N4RjlDUlpVVnhudXBpZ0FQAQ&sort=RELEVANCE&country=US&lang=en';
+            const options = {
+                method: 'GET',
+                headers: {
+                    'x-rapidapi-key': 'eeb2960c76msh537697c78a6d776p13bbb5jsndd81a858cf2a',
+                    'x-rapidapi-host': 'real-time-news-data.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await fetch(url, options);
+                
+                const data = await response.json();
+                console.log(data)
+              
+                data.data.all_articles.forEach((info) => {
+
+                    // if (info.description === null){
+                    //     data.articles.splice(index,1)
+                    //     console.log("--------------------");
+                    //     console.log(info)
+                    //     // console.log(index)
+                    // }else{
                      let news = `
-                            <div class="news-box" onclick="visitpage('${info.url}')">
+                            <div class="news-box" onclick="visitpage('${info.link}')">
                                 <div class="image-div">
-                                    <img class="image" src="${info.urlToImage}" alt="image"></img>
+                                    <img class="image" src="${info.photo_url}" alt="image"></img>
                                 </div>
 
                                 <h1>${info.title}</h1>
-                                <p>${info.description}</p>
+                                <p>${info.snippet}</p>
 
                             </div>
                             `
 
                    container.innerHTML += news;
-                    }
+                    // }
 
-                })})
-                
-                
-            .catch((err)=>{
-                container.innerHTML = err + " news try refreshing the page"
-            })
-        }
-
-        function visitpage(link){
-            window.location = link;
-        }
-
-        function opensearch(elem){
-            elem.classList.toggle("show")
-        }
-
-        function closesearch(){
-            searchopen.classList.remove("show");
-        }
-        
-        function showmenu(){
-            sidebar.classList.add("sidebarshow") ;
-        }
-
-        function hidesidebar(){
-            sidebar.classList.remove("sidebarshow") ;
-        }
-
-       
-        function second(){
-            fetch("https://api.apitube.io/v1/news/everything?per_page=10", {
-            method: "GET",
-            headers: {
-                "X-API-Key": "api_live_DzCx6Xze2UWFKhFa08LxkhV1iyQtKUZBDsLVps4DDPk6W2i8mKpI5r4eC69z"
+                })
+            } catch (error) {
+                console.error(error);
             }
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data); // news articles here
-            })
-            .catch(error => console.error("Error:", error));
 
-                    }
+         }
 
-        second()
+    second()
                 
-       
-        news()
-        container.addEventListener('click', hidesidebar)
-        menu.addEventListener('click', showmenu)
-        window.addEventListener('scroll', hidesidebar)
-        close.addEventListener('click', hidesidebar)
+    // news()
+        
+    container.addEventListener('click', hidesidebar)
+    menu.addEventListener('click', showmenu)
+    window.addEventListener('scroll', hidesidebar)
+    close.addEventListener('click', hidesidebar)
 
 </script>
 </body>
 </html>
+
 
