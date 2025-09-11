@@ -92,7 +92,7 @@ people to their needs.</i>
 
 
     let url = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=727e7d8a76d041d5875065999470803a";
-
+    const proxy = "https://api.allorigins.win/raw?url=";
      
     // function news(){
     //         fetch(url)
@@ -162,7 +162,7 @@ people to their needs.</i>
             };
 
             try {
-                const response = await fetch(url, options);
+                const response = await fetch( proxy + encodeURIComponent(url), options);
                 
                 const data = await response.json();
                 console.log(data)
@@ -209,5 +209,6 @@ people to their needs.</i>
 </script>
 </body>
 </html>
+
 
 
